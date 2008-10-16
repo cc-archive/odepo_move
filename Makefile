@@ -1,4 +1,10 @@
-all_odepo_pages:
+all: import_manually
+
+bot_monkey: pywikipedia families
+	echo 'ALERT! I insist on symlinks to pywikipedia svn, and CC bot_monkey, and a relevant families directory.'
+	exit 1
+
+all_odepo_pages: pywikipedia
 	python get_all_odepo_pages.py > all_odepo_pages.tmp
 	mv all_odepo_pages.tmp all_odepo_pages
 
