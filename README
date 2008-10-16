@@ -1,0 +1,9 @@
+Step 1:
+
+Create symlinks to pywikipedia, the relevant pywikipedia bot families,
+and CC's bot_monkey.  For example:
+
+$ for nice in pywikipedia families bot_monkey; do 
+   ln -s ~/cctools/pywikipedia/trunk/$nice
+  done
+
