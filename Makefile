@@ -12,3 +12,5 @@ import_manually: all_odepo_pages automatic_importable
 		grep '^< ' | sed 's/^< //' > import_manually.tmp
 	mv import_manually.tmp import_manually
 
+clean:
+	rm -f all_odepo_pages automatic_importable import_manually
