@@ -13,4 +13,4 @@ import_manually: all_odepo_pages automatic_importable
 	mv import_manually.tmp import_manually
 
 clean:
-	rm -f all_odepo_pages automatic_importable import_manually
+	rm -f all_odepo_pages automatic_importable import_manually *.tmp
