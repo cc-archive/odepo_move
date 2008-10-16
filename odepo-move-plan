@@ -1,0 +1,14 @@
+ODEPO move plan
+
+Identify all pages in Category:Organization from online wiki API query
+Create a list of these pages
+Append Form:Organization, Template:Organization
+For each of those pages, if they are in any other categories, move them to a by-hand list
+
+Filter a wiki.cc.org XML dump down to only include those pages
+
+Import those pages into the ccLearn community wiki
+Delete them from the main CC wiki.
+
+Take the by-hand pages, and import them, too.
+
