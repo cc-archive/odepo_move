@@ -8,7 +8,7 @@ automatic_importable: all_odepo_pages
 	mv all_odepo_pages.tmp all_odepo_pages
 
 import_manually: all_odepo_pages automatic_importable 
-	diff -u all_odepo_pages automatic_importable | \
-		grep '^ ' | sed 's/^ //' > import_manually.tmp
+	diff all_odepo_pages automatic_importable | \
+		grep '^< ' | sed 's/^< //' > import_manually.tmp
 	mv import_manually.tmp import_manually
 
