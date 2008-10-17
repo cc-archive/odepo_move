@@ -1,7 +1,7 @@
 PLAYGROUND:=$(shell mktemp -d data/tmpXX)
 BBQ=$(PLAYGROUND)/bbq
 
-all: data/import_manually
+all: data/just_interesting_pages_ccwiki_dump.xml
 
 data:
 	mkdir data
@@ -25,7 +25,9 @@ data/ccwiki_dump.xml:
 	exit 1
 
 data/just_interesting_pages_ccwiki_dump.xml: data/import_manually
-	python 
+	python relevant_pages_filter.py data/all_odepo_pages < \
+		data/ccwiki_dump.xml > $(BBQ)
+	mv $(BBQ) data/just_interesting_pages_ccwiki_dump.xml
 
 clean:
 	rm -f data/all_odepo_pages data/automatic_importable data/import_manually data/*.tmp
