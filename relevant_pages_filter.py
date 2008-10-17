@@ -24,11 +24,13 @@ class RelevantPagesFilter(XMLFilterBase):
         XMLFilterBase.__init__(self, upstream)
         self._downstream = downstream
         self._accumulator = []
-        self.growing_page_title = False
-        self.do_nothing = False
+        self.current_page_title = None
+        self.keep_this = True
         self.text_filter = text_filter
         self.should_filter = False
+        self.growing_page_title = False
         self.okay_titles = set(okay_titles)
+        print >> sys.stderr, "Okay titles are:", self.okay_titles
 	self.manualOverride = manualOverride # Set this to True if you want text_filter never to run
 
     def _complete_text_node(self):
@@ -38,36 +40,60 @@ class RelevantPagesFilter(XMLFilterBase):
             if self.should_filter and not self.manualOverride:
                 text = self.text_filter(text).strip()
             if self.growing_page_title:
+                # Store the current page title
+                self.current_page_title = text.strip()
+                assert self.current_page_title
                 self.growing_page_title = False
                 # Check if it's a title we care about.
                 # If so, great, we'll keep going.
                 if text in self.okay_titles:
                     assert not self.do_nothing
-                    pass
-                else:
-                    # It's not something we care about.  Ditch it.
-                    self.do_nothing = True
-                    return # get outta here before downstream gets the chars
-            if not self.do_nothing:
+            if self.keep_this:
                 self._downstream.characters(text)
         return
 
     def startElement(self, name, attrs):
+        # If we enter this and the node we're starting is a page we don't
+        # care about, we can't know yet.
+        #if 'preserve' in attrs.values():
+        #    rofl
         self._complete_text_node()
         if name == 'text':
             self.should_filter = True
         if name == 'page':
             self.growing_page_title = True
+        elif name == 'revision':
+            # by now, we know if we like it
+            print >> sys.stderr, "At a revision start."
+            assert self.current_page_title.strip()
+            print >> sys.stderr, 'title =', self.current_page_title
+            print >> sys.stderr, 'keep_this =', self.keep_this
+            if self.current_page_title in self.okay_titles:
+                assert self.keep_this
+            else:
+                self.keep_this = False
+                return
+        elif not self.keep_this:
+            return
         self._downstream.startElement(name, attrs)
         return
 
     def startElementNS(self, name, qname, attrs):
+        if 'preserve' in attrs.values():
+            rofl
+        # Leave this unmodified.
         self._complete_text_node()
+        if not self.keep_this:
+            return
         self._downstream.startElementNS(name, qname, attrs)
         return
 
     def endElement(self, name):
         self._complete_text_node()
+        if not self.keep_this:
+            if name == 'revision':
+                self.keep_this = True
+            return
         self._downstream.endElement(name)
         self.should_filter = False
         return
