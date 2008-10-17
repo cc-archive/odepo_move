@@ -12,6 +12,6 @@ setup(
                       ],
 
     dependency_links=[
-                      'http://git.asheesh.org/?p=patched/mwclient.git;a=snapshot;h=8edac3e3c62bd78b3a47dbc59a3788f193bc16bc;sf=tgz#egg=mwclient',
+                      'http://git.asheesh.org/?p=patched/mwclient.git;a=snapshot;h=2c900730c531cecd602f42c7eb8e818a0081b8e3;sf=tgz#egg=mwclient',
                       ],
 )
