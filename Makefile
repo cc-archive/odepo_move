@@ -14,5 +14,11 @@ import_manually: all_odepo_pages automatic_importable
 		grep '^< ' | sed 's/^< //' > import_manually.tmp
 	mv import_manually.tmp import_manually
 
+ccwiki_dump.xml:
+	echo "You must give me a CC Wiki XML dump."
+	exit 1
+
+
+
 clean:
 	rm -f all_odepo_pages automatic_importable import_manually *.tmp
