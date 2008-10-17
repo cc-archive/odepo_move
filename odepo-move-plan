@@ -1,14 +1,37 @@
 ODEPO move plan
 
-Identify all pages in Category:Organization from online wiki API query
-Create a list of these pages
-Append Form:Organization, Template:Organization
-For each of those pages, if they are in any other categories, move them to a by-hand list
+Step 1:
 
-Filter a wiki.cc.org XML dump down to only include those pages
+* Identify all pages in Category:Organization from online wiki API query
+* Create a list of these pages
+* Append Form:Organization, Template:Organization
 
-Import those pages into the ccLearn community wiki
-Delete them from the main CC wiki.
+Step 2:
 
-Take the by-hand pages, and import them, too.
+* For pages with more than one category, create a list of pages to review by-hand
 
+Step 3:
+
+* Make an XML dump of the CC Wiki
+
+Step 4:
+
+* Filter that XML dump down to just revisions of the pages we care about
+
+Step 5:
+
+* Import that filtered dump into the ccLearn community wiki
+
+Step 6:
+
+* By-hand review the pages that need by-hand review.
+
+Step 7:
+
+* In CC Wiki, use Special:Delete to delete the pages that had only one category
+
+Step 8:
+
+* In CC Wiki, review by-hand the by-hand pages
+
+This has the benefit of keeping all page revision history.
