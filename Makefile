@@ -1,24 +1,31 @@
-all: import_manually
+PLAYGROUND:=$(shell mktemp -d data/tmpXX)
+BBQ=$(PLAYGROUND)/bbq
 
-all_odepo_pages: get_all_odepo_pages.py
-	./bin/python get_all_odepo_pages.py > all_odepo_pages.tmp
-	mv all_odepo_pages.tmp all_odepo_pages
+all: data/import_manually
 
-automatic_importable: remove_pages_with_multiple_categories.py all_odepo_pages
-	./bin/python remove_pages_with_multiple_categories.py all_odepo_pages > \
-		automatic_importable.tmp
-	mv automatic_importable.tmp automatic_importable
+data:
+	mkdir data
 
-import_manually: all_odepo_pages automatic_importable 
-	diff all_odepo_pages automatic_importable | \
-		grep '^< ' | sed 's/^< //' > import_manually.tmp
-	mv import_manually.tmp import_manually
+data/all_odepo_pages: data get_all_odepo_pages.py
+	./bin/python get_all_odepo_pages.py > $(BBQ)
+	mv $(BBQ) data/all_odepo_pages
 
-ccwiki_dump.xml:
+data/automatic_importable: remove_pages_with_multiple_categories.py data/all_odepo_pages
+	./bin/python remove_pages_with_multiple_categories.py data/all_odepo_pages > \
+		$(BBQ)
+	mv $(BBQ)  automatic_importable
+
+data/import_manually: data/all_odepo_pages data/automatic_importable 
+	diff data/all_odepo_pages data/automatic_importable | \
+		grep '^< ' | sed 's/^< //' > $(BBQ)
+	mv $(BBQ) import_manually
+
+data/ccwiki_dump.xml:
 	echo "You must give me a CC Wiki XML dump."
 	exit 1
 
-
+data/just_interesting_pages_ccwiki_dump.xml: data/import_manually
+	python 
 
 clean:
-	rm -f all_odepo_pages automatic_importable import_manually *.tmp
+	rm -f data/all_odepo_pages data/automatic_importable data/import_manually data/*.tmp
