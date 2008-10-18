@@ -4,3 +4,4 @@ pywikipedia
 *.pyc
 *~
 *.tmp
+data
