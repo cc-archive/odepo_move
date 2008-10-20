@@ -15,8 +15,7 @@ def main(good_pages_file, fd):
 
     # Figure out which pages we like
     yummy = set()
-    for line in open(good_pages_file):
-        yummy.add(line2page(line))
+    yummy.update( (line2page(line) for line in open(good_pages_file)) )
 
     dom = xml.dom.minidom.parse(fd)
     pages = dom.getElementsByTagName('page')
