@@ -13,12 +13,12 @@ data/all_odepo_pages: data get_all_odepo_pages.py
 data/automatic_importable: remove_pages_with_multiple_categories.py data/all_odepo_pages
 	./bin/python remove_pages_with_multiple_categories.py data/all_odepo_pages > \
 		$(BBQ)
-	mv $(BBQ)  automatic_importable
+	mv $(BBQ)  data/automatic_importable
 
 data/import_manually: data/all_odepo_pages data/automatic_importable 
 	diff data/all_odepo_pages data/automatic_importable | \
 		grep '^< ' | sed 's/^< //' > $(BBQ)
-	mv $(BBQ) import_manually
+	mv $(BBQ) data/import_manually
 
 data/ccwiki_dump.xml:
 	echo "You must give me a CC Wiki XML dump."
