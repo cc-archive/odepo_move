@@ -3,12 +3,13 @@ BBQ=$(PLAYGROUND)/bbq
 
 all: data/just_interesting_pages_ccwiki_dump.xml
 
-data:
-	mkdir data
+data/.stamp:
+	mkdir -p data
+	touch data/.stamp
 
-data/all_odepo_pages: data get_all_odepo_pages.py
+data/all_odepo_pages: data/.stamp get_all_odepo_pages.py
 	./bin/python get_all_odepo_pages.py > $(BBQ)
-	mv $(BBQ) data/all_odepo_pages
+	mv -v $(BBQ) data/all_odepo_pages
 
 data/automatic_importable: remove_pages_with_multiple_categories.py data/all_odepo_pages
 	./bin/python remove_pages_with_multiple_categories.py data/all_odepo_pages > \
