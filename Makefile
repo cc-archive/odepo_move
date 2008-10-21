@@ -25,7 +25,7 @@ data/ccwiki_dump.xml:
 	echo "You must give me a CC Wiki XML dump."
 	exit 1
 
-data/just_interesting_pages_ccwiki_dump.xml: data/import_manually
+data/just_interesting_pages_ccwiki_dump.xml: data/all_odepo_pages
 	python relevant_pages_filter.py data/all_odepo_pages < \
 		data/ccwiki_dump.xml > $(BBQ)
 	mv $(BBQ) data/just_interesting_pages_ccwiki_dump.xml
