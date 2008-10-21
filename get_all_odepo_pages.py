@@ -19,6 +19,8 @@ extra_pages = [
     'Property:Organization Type',
     'Property:Open or Free Statement',
     'Property:License short name',
+    'Property:OER Statement',
+    'Public domain',
     'ODEPO',
     'ODEPO FAQ',
     ]
